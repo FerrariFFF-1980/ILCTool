@@ -27,9 +27,10 @@ Build:
 
 ```bash
 g++ -std=c++17 -g -Idomain -Iutils ilctool.cpp -o build/ILCTool.exe
-
+```
 
 Run:
+```bash
 build/ilctool.exe
 ```
 
