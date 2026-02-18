@@ -1,24 +1,60 @@
-#include <iostream>
+#include <wx/wx.h>
 
-#include "Laboratory.h"
-#include "Measurand.h"
-#include "Sample.h"
-#include "MeasurementResult.h"
-#include "Study.h"
-
-int main()
+class MainFrame : public wxFrame
 {
-    std::cout << "Hello from ILS\n";
+public:
+    MainFrame()
+        : wxFrame(nullptr,
+                  wxID_ANY,
+                  "ILCTool",
+                  wxDefaultPosition,
+                  wxSize(900, 600))
+    {
+        BuildUi();
+        Centre();
+    }
 
-    Laboratory lab("LAB_01", "Lab Central");
-    Measurand measurand("GLUCOSE", "Glucose", "mg/dL");
-    Sample sample("A", measurand.GetMeasurandId());
-    MeasurementResult result(lab.GetLaboratoryId(), sample.GetSampleId(), 1, 123.4);
+private:
+    void BuildUi()
+    {
+        // Create a simple vertical layout
+        auto *rootSizer = new wxBoxSizer(wxVERTICAL);
 
-    std::cout << "Lab: " << result.GetLaboratoryId() << "\n";
-    std::cout << "Sample: " << result.GetSampleId() << "\n";
-    std::cout << "Replicate: " << result.GetReplicateIndex() << "\n";
-    std::cout << "Value: " << result.GetValue() << "\n";
+        // Title label
+        auto *title = new wxStaticText(this, wxID_ANY, "ILCTool");
+        wxFont titleFont = title->GetFont();
+        titleFont.SetPointSize(titleFont.GetPointSize() + 6);
+        titleFont.SetWeight(wxFONTWEIGHT_BOLD);
+        title->SetFont(titleFont);
 
-    return 0;
-}
+        // Subtitle
+        auto *subtitle = new wxStaticText(
+            this,
+            wxID_ANY,
+            "Open-source software for Interlaboratory Studies");
+
+        rootSizer->AddStretchSpacer(1);
+        rootSizer->Add(title, 0, wxALIGN_CENTER | wxBOTTOM, 8);
+        rootSizer->Add(subtitle, 0, wxALIGN_CENTER);
+        rootSizer->AddStretchSpacer(1);
+
+        SetSizer(rootSizer);
+
+        // Status bar
+        CreateStatusBar();
+        SetStatusText("Ready");
+    }
+};
+
+class IlcToolApp : public wxApp
+{
+public:
+    bool OnInit() override
+    {
+        auto *frame = new MainFrame();
+        frame->Show(true);
+        return true;
+    }
+};
+
+wxIMPLEMENT_APP(IlcToolApp);
