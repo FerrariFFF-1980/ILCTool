@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build (UCRT64) - Console",
+      "type": "process",
+      "command": "C:\\msys64\\usr\\bin\\bash.exe",
+      "args": [
+        "-lc",
+        "export MSYSTEM=UCRT64; export CHERE_INVOKING=1; export PATH=/c/msys64/ucrt64/bin:/c/msys64/usr/bin:$PATH; cd \"${workspaceFolder}\"; mkdir -p build; g++ -std=c++17 -g -Idomain -Iutils ilctool.cpp -o build/ilctool.exe"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build wxApp (UCRT64)",
+      "type": "process",
+      "command": "C:\\msys64\\usr\\bin\\bash.exe",
+      "args": [
+        "-lc",
+        "export MSYSTEM=UCRT64; export CHERE_INVOKING=1; export PATH=/c/msys64/ucrt64/bin:/c/msys64/usr/bin:$PATH; cd \"${workspaceFolder}\"; mkdir -p build; g++ -std=c++17 -g -Idomain -Iutils ilctool.cpp -o build/wxapp.exe $(wx-config --cxxflags --libs) -mwindows"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    }
+  ]
+}
